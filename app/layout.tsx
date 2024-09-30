@@ -1,5 +1,9 @@
+import { menu } from "@/lib/data";
+import cn from "clsx";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Image from "next/image";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -23,21 +27,73 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = true;
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <main className="flex flex-wrap">
-          {/* <Sidebar /> */}
-          {/* <section
-            className={cn("content", {
-              "content-full": !user,
+          <section className="w-[15%] py-5 px-0 bg-[#f8f8f8]">
+            <Link href="/" className="block mb-[30px] ml-3" rel="noreferrer">
+              <Image
+                src="http://localhost:3000/img/common/logo.png"
+                alt="Youtube"
+                width={169}
+                height={55}
+              />
+            </Link>
+            <div className="my-8 mx-auto h-[1px] bg-[#a4a4a4] opacity-40" />
+            <ul className="list-none">
+              {menu.map((menuItem, index) => (
+                <div key={menuItem.title}>
+                  <li className="block mb-[39px]">
+                    <Link
+                      href={menuItem.link}
+                      className="no-underline flex items-center text-[#111] font-medium relative px-[25px] py-0"
+                    >
+                      <Image
+                        className="mr-5 max-w-7 h-auto block"
+                        src={`http://localhost:3000/${menuItem.image}`}
+                        alt={menuItem.title}
+                        width={150}
+                        height={150}
+                      />
+                      <b className="font-normal">{menuItem.title}</b>
+                    </Link>
+                  </li>
+                  {index === 2 && (
+                    <div className="my-8 mx-auto h-[1px] bg-[#a4a4a4] opacity-40" />
+                  )}
+                </div>
+              ))}
+              <div className="line_mnu" />
+            </ul>
+            <button
+              className="no-underline font-medium text-[#111] block text-lg ml-5 mb-10"
+              // onClick={() => {
+              // AuthService.logout()
+              // setData && setData(defaultValueAuthState)
+              // }}
+            >
+              Logout
+            </button>
+            <div className="text-[#a4a4a4] ml-5">© 2022 Youtube, LLC</div>
+          </section>
+
+          <section
+            className={cn("w-[85%]", {
+              "w-full": !user,
             })}
-          > */}
-          {/* <Header /> */}
-          <div className="content-wrapper">{children}</div>
-          {/* </section> */}
+          >
+            <header className="relative px-[25px] py-[15px]border-b border-solid">
+              {/* <Search />
+			<IconsRight /> */}
+              Search
+            </header>
+
+            <div className="content-wrapper">{children}</div>
+          </section>
         </main>
       </body>
     </html>
